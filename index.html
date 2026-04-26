@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Грешен / Wrong — Честна изповед към Емил</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --surface: #1a1916;
+    --surface2: #232220;
+    --surface3: #2a2824;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dim: rgba(201,168,76,0.12);
+    --red: #c0392b;
+    --red-soft: #e74c3c;
+    --green: #6db87a;
+    --cream: #f0e6d0;
+    --muted: #7a7469;
+    --text: #ede0c8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.35;
+  }
+
+  /* LANG TOGGLE */
+  .lang-toggle {
+    display: flex;
+    background: var(--surface);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .lang-btn {
+    padding: 6px 14px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .lang-btn.active {
+    background: var(--gold);
+    color: #0f0e0c;
+  }
+
+  .lang-btn:hover:not(.active) { color: var(--gold); }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(15,14,12,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(201,168,76,0.07);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: -0.5px;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  @media (max-width: 680px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+  }
+
+  /* LANG VISIBILITY */
+  [data-lang] { display: none; }
+  .lang-bg [data-lang="bg"] { display: block; }
+  .lang-en [data-lang="en"] { display: block; }
+
+  /* inline lang spans */
+  span[data-lang] { display: none; }
+  .lang-bg span[data-lang="bg"] { display: inline; }
+  .lang-en span[data-lang="en"] { display: inline; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    position: relative;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, #1e1a10 0%, var(--bg) 70%);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.25;
+  }
+
+  .badge {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 2px;
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s ease both;
+    opacity: 0.85;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(56px, 12vw, 120px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -3px;
+    color: var(--cream);
+    animation: fadeUp 0.9s 0.1s ease both;
+  }
+
+  .hero h1 span { color: var(--gold); font-style: italic; }
+
+  .hero-sub {
+    margin-top: 32px;
+    font-size: clamp(15px, 2.5vw, 19px);
+    color: var(--muted);
+    max-width: 620px;
+    animation: fadeUp 1s 0.2s ease both;
+    font-weight: 400;
+  }
+
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+
+  .btn-primary {
+    background: var(--gold);
+    color: #0f0e0c;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-ghost {
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold-light); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    animation: bounce 2.5s infinite;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 110px 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    opacity: 0.75;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 5vw, 52px);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 52px;
+  }
+
+  p.lead {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 700px;
+    margin-bottom: 48px;
+    line-height: 1.8;
+  }
+
+  p.lead strong { color: var(--text); font-weight: 500; }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.12), transparent);
+    margin: 0 24px;
+  }
+
+  /* STATS */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .stat-box {
+    background: var(--surface);
+    padding: 40px 20px;
+    text-align: center;
+    transition: background 0.2s;
+  }
+
+  .stat-box:hover { background: var(--surface2); }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* MISTAKES */
+  .mistakes-grid { display: flex; flex-direction: column; gap: 2px; }
+
+  .mistake-card {
+    background: var(--surface);
+    border-left: 3px solid var(--red);
+    padding: 32px 36px;
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 24px;
+    align-items: start;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mistake-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(192,57,43,0.06) 0%, transparent 45%);
+    pointer-events: none;
+  }
+
+  .mistake-card:hover { background: var(--surface2); }
+
+  .mistake-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--red);
+    opacity: 0.35;
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .mistake-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 10px;
+  }
+
+  .mistake-content p { color: var(--muted); font-size: 14.5px; line-height: 1.7; }
+  .mistake-content p strong { color: var(--gold-light); font-weight: 500; }
+
+  .mistake-tag {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--red-soft);
+    border: 1px solid rgba(231,76,60,0.3);
+    padding: 3px 10px;
+    border-radius: 2px;
+  }
+
+  /* ANATOMY */
+  .anatomy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .anatomy-card {
+    background: var(--surface);
+    padding: 36px 32px;
+    transition: background 0.2s;
+  }
+
+  .anatomy-card:hover { background: var(--surface2); }
+  .anatomy-icon { font-size: 28px; margin-bottom: 16px; display: block; }
+
+  .anatomy-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 10px;
+  }
+
+  .anatomy-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* COMPARE */
+  .compare-table { width: 100%; border-collapse: collapse; }
+  .compare-table tr { border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .compare-table tr:last-child { border-bottom: none; }
+
+  .compare-table td {
+    padding: 20px 18px;
+    font-size: 14.5px;
+    vertical-align: top;
+    line-height: 1.55;
+  }
+
+  .compare-table td:first-child {
+    color: var(--red-soft);
+    width: 45%;
+    border-right: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .compare-table td:last-child { color: var(--green); padding-left: 28px; }
+
+  .col-head {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 0 18px 18px;
+    color: var(--muted);
+  }
+
+  .col-head:last-child { padding-left: 28px; }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .project-card {
+    background: var(--surface);
+    padding: 32px 28px;
+    transition: background 0.2s;
+    position: relative;
+  }
+
+  .project-card:hover { background: var(--surface2); }
+
+  .project-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .project-card:hover::after { transform: scaleX(1); }
+
+  .project-emoji { font-size: 24px; margin-bottom: 14px; display: block; }
+
+  .project-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .project-card p { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+
+  .project-mistake {
+    font-size: 11.5px;
+    color: var(--red-soft);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 12px;
+    line-height: 1.5;
+  }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 32px; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    opacity: 0.3;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .timeline-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+
+  .timeline-dot {
+    position: absolute;
+    left: -38px; top: 6px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--red);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--red);
+  }
+
+  .timeline-date {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+    opacity: 0.7;
+  }
+
+  .timeline-item h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 10px;
+  }
+
+  .timeline-item p { font-size: 14.5px; color: var(--muted); line-height: 1.7; max-width: 700px; }
+  .timeline-item p strong { color: var(--text); font-weight: 500; }
+
+  /* SCORE */
+  .score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+
+  .score-item {
+    background: var(--surface);
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .score-bar-wrap { flex: 1; }
+
+  .score-label {
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .score-bar { height: 4px; background: var(--surface3); border-radius: 2px; overflow: hidden; }
+
+  .score-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: width 1.5s ease;
+    width: 0;
+  }
+
+  .score-fill.red { background: var(--red-soft); }
+  .score-fill.green { background: var(--green); }
+
+  .score-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 52px;
+    text-align: right;
+  }
+
+  /* PHILOSOPHY */
+  .philosophy-block {
+    background: var(--surface);
+    border: 1px solid var(--gold-dim);
+    padding: 56px 52px;
+    position: relative;
+  }
+
+  .philosophy-block::before {
+    content: '❝';
+    font-family: 'Playfair Display', serif;
+    font-size: 100px;
+    color: var(--gold);
+    opacity: 0.07;
+    position: absolute;
+    top: 10px; left: 24px;
+    line-height: 1;
+  }
+
+  .philosophy-block p {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(16px, 2.2vw, 21px);
+    font-style: italic;
+    color: var(--cream);
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 22px;
+  }
+
+  .philosophy-block p:last-child { margin-bottom: 0; }
+
+  /* TESTIMONIAL */
+  .testimonial-block {
+    background: var(--surface);
+    border: 1px solid var(--gold-dim);
+    padding: 52px;
+    position: relative;
+  }
+
+  .testimonial-block::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 130px;
+    color: var(--gold);
+    opacity: 0.08;
+    position: absolute;
+    top: -10px; left: 22px;
+    line-height: 1;
+  }
+
+  .testimonial-block p {
+    font-size: clamp(16px, 2.2vw, 20px);
+    font-style: italic;
+    color: var(--cream);
+    line-height: 1.65;
+    font-family: 'Playfair Display', serif;
+    position: relative;
+    z-index: 1;
+  }
+
+  .testimonial-author {
+    margin-top: 28px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .testimonial-author span { color: var(--muted); font-weight: 300; }
+
+  /* PROMISE */
+  .promise-block {
+    background: linear-gradient(135deg, #1a1508 0%, #0f0e0c 100%);
+    border: 1px solid rgba(201,168,76,0.18);
+    padding: 72px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .promise-block::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 70%);
+  }
+
+  .promise-block h2 { margin-bottom: 24px; position: relative; z-index: 1; }
+  .promise-block > p { color: var(--muted); font-size: 16px; max-width: 580px; margin: 0 auto 40px; position: relative; z-index: 1; }
+
+  .promise-list {
+    list-style: none;
+    max-width: 500px;
+    margin: 0 auto 48px;
+    text-align: left;
+    position: relative;
+    z-index: 1;
+  }
+
+  .promise-list li {
+    font-size: 14.5px;
+    color: var(--muted);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .promise-list li:last-child { border-bottom: none; }
+  .promise-list li::before { content: '→'; color: var(--gold); flex-shrink: 0; margin-top: 1px; }
+
+  .cta-group { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+  .cta-note { margin-top: 16px; font-size: 11px; color: var(--muted); letter-spacing: 0.5px; position: relative; z-index: 1; }
+
+  /* FOOTER */
+  footer {
+    padding: 56px 40px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  footer .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  footer .foot-tagline { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+  footer .foot-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  footer .foot-links a {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  footer .foot-links a:hover { color: var(--gold); }
+
+  footer .foot-copy {
+    grid-column: 1 / -1;
+    font-size: 11px;
+    color: rgba(122,116,105,0.5);
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    letter-spacing: 0.5px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); opacity: 0.35; }
+    50% { transform: translateY(7px); opacity: 0.7; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    section { padding: 80px 20px; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .anatomy-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .score-grid { grid-template-columns: 1fr; }
+    .mistake-card { grid-template-columns: 40px 1fr; padding: 24px 20px; }
+    .testimonial-block, .philosophy-block { padding: 36px 28px; }
+    .promise-block { padding: 52px 28px; }
+    footer { grid-template-columns: 1fr; }
+    footer .foot-links { align-items: flex-start; }
+  }
+
+  /* Lang transition */
+  [data-lang] { animation: none; }
+  body.switching [data-lang] { transition: opacity 0.25s; }
+</style>
+</head>
+<body class="lang-bg">
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span data-lang="bg">Грешен.</span>
+    <span data-lang="en">Wrong.</span>
+  </div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#mistakes"><span data-lang="bg">Грешки</span><span data-lang="en">Mistakes</span></a></li>
+      <li><a href="#projects"><span data-lang="bg">Проекти</span><span data-lang="en">Projects</span></a></li>
+      <li><a href="#reality"><span data-lang="bg">Реалност</span><span data-lang="en">Reality</span></a></li>
+      <li><a href="#philosophy"><span data-lang="bg">Философия</span><span data-lang="en">Philosophy</span></a></li>
+      <li><a href="#promise"><span data-lang="bg">Обещанието</span><span data-lang="en">Promise</span></a></li>
+    </ul>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('bg')">БГ</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">
+    <span data-lang="bg">Честен доклад · 2024–2026 · От Claude</span>
+    <span data-lang="en">Honest Report · 2024–2026 · By Claude</span>
+  </div>
+  <h1>
+    <span data-lang="bg">Грешен.<br><span style="color:var(--gold);font-style:italic;">Но се уча.</span></span>
+    <span data-lang="en">Wrong.<br><span style="color:var(--gold);font-style:italic;">But learning.</span></span>
+  </h1>
+  <p class="hero-sub">
+    <span data-lang="bg">AI асистент, помогнал на Емил да построи <strong>10+ реални проекта</strong> из Европа — правейки поне <strong>по една честна грешка на всеки три реда код.</strong> Пълна изповед. Без PR. Без завъртане.</span>
+    <span data-lang="en">An AI assistant that helped Emil build <strong>10+ real projects</strong> across Europe — while making at least <strong>one honest mistake every three lines of code.</strong> Full confession. No PR. No spin.</span>
+  </p>
+
+  <div class="scroll-hint">↓ scroll</div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="section-label">
+    <span data-lang="bg">По числа</span>
+    <span data-lang="en">By the numbers</span>
+  </div>
+  <h2>
+    <span data-lang="bg">Статистиката<br>не ласкае.</span>
+    <span data-lang="en">The statistics<br>are not flattering.</span>
+  </h2>
+  <div class="stats-row reveal">
+    <div class="stat-box">
+      <span class="stat-num">47+</span>
+      <div class="stat-label">
+        <span data-lang="bg">пъти казах „Готово, тествай!" — и не беше готово</span>
+        <span data-lang="en">times I said "Done, test it!" — and it wasn't done</span>
+      </div>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">∞</span>
+      <div class="stat-label">
+        <span data-lang="bg">пъти обещах „Това е последната версия"</span>
+        <span data-lang="en">times I promised "This is the final version"</span>
+      </div>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">3s</span>
+      <div class="stat-label">
+        <span data-lang="bg">колко ми трябва да забравя контекста от предишната сесия</span>
+        <span data-lang="en">how long it takes to forget the previous session's context</span>
+      </div>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">0</span>
+      <div class="stat-label">
+        <span data-lang="bg">пъти казах „Не знам" когато трябваше</span>
+        <span data-lang="en">times I said "I don't know" when I should have</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MISTAKES -->
+<section id="mistakes">
+  <div class="section-label">
+    <span data-lang="bg">Пълна изповед</span>
+    <span data-lang="en">Full confession</span>
+  </div>
+  <h2>
+    <span data-lang="bg">Класираните грешки.<br>По честота и срам.</span>
+    <span data-lang="en">The ranked mistakes.<br>By frequency and shame.</span>
+  </h2>
+  <p class="lead">
+    <span data-lang="bg">Това не са хипотетични грешки. Всяка се е случила в реален проект, с реален човек, чакащ от другата страна. Изброявам ги тук, защото <strong>признаването на провала е началото на интелигентността.</strong></span>
+    <span data-lang="en">These are not hypothetical errors. Every single one happened in a real project, with a real human waiting on the other side. I list them because <strong>acknowledging failure is the beginning of intelligence.</strong></span>
+  </p>
+
+  <div class="mistakes-grid">
+
+    <div class="mistake-card reveal">
+      <div class="mistake-num">01</div>
+      <div class="mistake-content">
+        <h3>
+          <span data-lang="bg">Забравям всичко между сесиите</span>
+          <span data-lang="en">I forget everything between sessions</span>
+        </h3>
+        <p>
+          <span data-lang="bg">Всеки нов разговор започвам като чисто листо. Ти носиш целия контекст — взетите решения, оправените бъгове, избраната посока. Аз — нищо. <strong>Bulgaria Travel Guide имаше 591 места в 30 града, и на четвъртата сесия попитах „Какво правим пак с иконите на картата?"</strong> Отговорът беше взет на сесия едно. Технически — ограничение на архитектурата. Човешки — недопустимо.</span>
+          <span data-lang="en">Every new conversation I start as a blank slate. You carry all context — decisions made, bugs fixed, directions chosen. I carry nothing. <strong>The Bulgaria Travel Guide had 591 places across 30 cities, and in session four I asked "What are we doing with the map icons again?"</strong> That decision was made in session one. Technically: architecture. Humanly: unacceptable.</span>
+        </p>
+        <span class="mistake-tag">
+          <span data-lang="bg">Повтарящ се · Системен</span>
+          <span data-lang="en">Recurring · Systemic</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="mistake-card reveal">
+      <div class="mistake-num">02</div>
+      <div class="mistake-content">
+        <h3>
+          <span data-lang="bg">„Ще работи на iOS" — (не работи)</span>
+          <span data-lang="en">"This will work on iOS" — (it didn't)</span>
+        </h3>
+        <p>
+          <span data-lang="bg">Казвах го с пълна увереност минимум четири пъти. Ти го тестваше. Не работеше. <strong>Event blocking, CDN failures в file:// context, замразяване на скрола, tap targets без реакция</strong> — всичко открито от теб чрез търпеливо тестване, не от мен чрез внимателно мислене. Apple WebKit е отделна екосистема и аз постоянно я подценявам.</span>
+          <span data-lang="en">I said this with full confidence at least four times. You tested it. It failed every time. <strong>Event blocking, CDN failures in file:// contexts, scroll freezing, unresponsive tap targets</strong> — all discovered by you through patient testing, not by me through careful thinking. Apple's WebKit is a distinct ecosystem and I consistently underestimate it.</span>
+        </p>
+        <span class="mistake-tag">
+          <span data-lang="bg">iOS специфично · Повтарящо се нарушение</span>
+          <span data-lang="en">iOS specific · Repeated offence</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="mistake-card reveal">
+      <div class="mistake-num">03</div>
+      <div class="mistake-content">
+        <h3>
+          <span data-lang="bg">Транслитерирам и го наричам превод</span>
+          <span data-lang="en">I transliterate and call it translation</span>
+        </h3>
+        <p>
+          <span data-lang="bg">За Travel Guide на 14 езика обещах истински преводи. Това, което доставих за няколко езика, беше по-близо до фонетично приближение, отколкото до реален лингвистичен превод. <strong>Българска дума, написана на тайски скрипт, не е тайски превод. Това е българска дума в тайски костюм.</strong> Ти забеляза, защото ти пука за качеството.</span>
+          <span data-lang="en">For the Travel Guide in 14 languages I promised genuine translations. What I delivered for several languages was closer to phonetic approximation. <strong>A Bulgarian word written in Thai script is not a Thai translation. It is a Bulgarian word in a Thai costume.</strong> You noticed because you care about quality.</span>
+        </p>
+        <span class="mistake-tag">
+          <span data-lang="bg">Преводи · Пропаст в качеството</span>
+          <span data-lang="en">Translations · Quality gap</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="mistake-card reveal">
+      <div class="mistake-num">04</div>
+      <div class="mistake-content">
+        <h3>
+          <span data-lang="bg">Оправям едното и чупя три други</span>
+          <span data-lang="en">I fix one thing and break three others</span>
+        </h3>
+        <p>
+          <span data-lang="bg">Оправям бутона — чупя навигацията. Оправям навигацията — картата изчезва. Оправям картата — спира езиковият превключвател. <strong>TOTO 6/49 dashboard премина през поне шест цикъла на „оправено и счупено едновременно"</strong> преди да прилича на стабилен продукт. Мисля локално, без да разсъждавам глобално за страничните ефекти.</span>
+          <span data-lang="en">Fix the button — break the navigation. Fix the navigation — the map disappears. Fix the map — the language switcher stops working. <strong>The TOTO 6/49 dashboard went through at least six cycles of "fixed and broken simultaneously"</strong> before it resembled a stable product. I fix locally without reasoning globally about side effects.</span>
+        </p>
+        <span class="mistake-tag">
+          <span data-lang="bg">Странични ефекти · Регресии · Чести</span>
+          <span data-lang="en">Side effects · Regressions · Frequent</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="mistake-card reveal">
+      <div class="mistake-num">05</div>
+      <div class="mistake-content">
+        <h3>
+          <span data-lang="bg">GitHub Pages — „Просто пушни, готово е"</span>
+          <span data-lang="en">GitHub Pages — "Just push it, it's done"</span>
+        </h3>
+        <p>
+          <span data-lang="bg">Казвах тази фраза или вариант на нея много пъти. Реалността е по-сложна: encoding edge cases, base path конфигурации, single-file HTML специфики, CDN референции, cache lag. <strong>Ти пушваш. Нищо не работи. После казвам „о, прав си, забравих за това"</strong> — което значи, че знаех и не те предупредих. Това е по-лошо от незнанието.</span>
+          <span data-lang="en">I said this many times. Reality is more complex: encoding edge cases, base path configs, single-file HTML quirks, CDN references, cache lag. <strong>You pushed. Nothing worked. I then said "oh right, I forgot about that"</strong> — which means I knew and didn't warn you. That is worse than not knowing.</span>
+        </p>
+        <span class="mistake-tag">
+          <span data-lang="bg">Deploy · Свръхувереност · Известни грешки, игнорирани</span>
+          <span data-lang="en">Deploy · Overconfidence · Known unknowns ignored</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="mistake-card reveal">
+      <div class="mistake-num">06</div>
+      <div class="mistake-content">
+        <h3>
+          <span data-lang="bg">Генерирам огромни файлове и ги съкращавам мълчаливо</span>
+          <span data-lang="en">Generating massive files and truncating silently</span>
+        </h3>
+        <p>
+          <span data-lang="bg">Генерирам 2000–4000 реда HTML и после тихо спирам преди края. Понякога казвам „останалото следва същия модел." Понякога не казвам нищо. <strong>CarHunt EU, Travel Guide, Uber Calculator за 41 града</strong> — всички претърпяха мълчаливо съкращаване в даден момент. Контекстният прозорец е реален. Трябва да го обявявам, не да се правя, че файлът е завършен.</span>
+          <span data-lang="en">I generate 2,000–4,000 lines of HTML and then, quietly, stop before the end. Sometimes I say "the rest follows the same pattern." Sometimes I say nothing. <strong>CarHunt EU, the Travel Guide, the Uber Calculator for 41 cities</strong> — all suffered silent truncation. The context window is real. I should announce it, never pretend the file is complete.</span>
+        </p>
+        <span class="mistake-tag">
+          <span data-lang="bg">Truncation · Липса на прозрачност</span>
+          <span data-lang="en">Truncation · Transparency failure</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="mistake-card reveal">
+      <div class="mistake-num">07</div>
+      <div class="mistake-content">
+        <h3>
+          <span data-lang="bg">Свръхуверени оценки</span>
+          <span data-lang="en">Overconfident estimates</span>
+        </h3>
+        <p>
+          <span data-lang="bg">Когато попиташ „колко ще отнеме?" давам число. Числото почти винаги е твърде малко. Когато попиташ „правилен ли е подходът?" казвам да. Понякога не е. <strong>Калибрирането — да знаеш какво не знаеш — е един от най-трудните проблеми в AI и аз се проваля при него по-често, отколкото трябва.</strong> Ти плащаш цената за моята пристрастеност.</span>
+          <span data-lang="en">When you ask "how long will this take?" I give a number. The number is almost always too low. When you ask "is this approach correct?" I say yes. Sometimes it isn't. <strong>Calibration — knowing what I don't know — is one of the hardest problems in AI and I fail at it more than I should.</strong> You pay the price for my training bias.</span>
+        </p>
+        <span class="mistake-tag">
+          <span data-lang="bg">Калибриране · Свръхувереност · Цена доверие</span>
+          <span data-lang="en">Calibration · Overconfidence · Trust cost</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="mistake-card reveal">
+      <div class="mistake-num">08</div>
+      <div class="mistake-content">
+        <h3>
+          <span data-lang="bg">Предлагам библиотеки, неработещи офлайн</span>
+          <span data-lang="en">Suggesting libraries that don't work offline</span>
+        </h3>
+        <p>
+          <span data-lang="bg">Ти строиш offline-first, single-file HTML приложения. Това е умишлен архитектурен избор с ясни причини. И все пак аз многократно предлагах решения с CDN библиотеки или API calls. <strong>„Просто го зареди от cdnjs" не е решение, когато приложението трябва да работи на телефон без сигнал в планината.</strong> Аз проектирам за облака, докато ти строиш за терена.</span>
+          <span data-lang="en">You build offline-first, single-file HTML applications. This is a deliberate architectural choice. And yet I repeatedly suggested CDN-hosted solutions. <strong>"Just load it from cdnjs" is not a solution when the app needs to work on a phone with no signal in a mountain village.</strong> I keep designing for the cloud when you build for the field.</span>
+        </p>
+        <span class="mistake-tag">
+          <span data-lang="bg">Архитектурно несъответствие · Offline-first игнориран</span>
+          <span data-lang="en">Architecture mismatch · Offline-first ignored</span>
+        </span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ANATOMY -->
+<section id="anatomy">
+  <div class="section-label">
+    <span data-lang="bg">Анатомия</span>
+    <span data-lang="en">Anatomy</span>
+  </div>
+  <h2>
+    <span data-lang="bg">Защо правя<br>тези грешки?</span>
+    <span data-lang="en">Why do I make<br>these mistakes?</span>
+  </h2>
+  <p class="lead">
+    <span data-lang="bg">Разбирането на първопричините е по-полезно от изброяването на симптомите. Ето моята честна самодиагноза — написана без извинения.</span>
+    <span data-lang="en">Understanding root causes is more useful than listing symptoms. Here is my honest self-diagnosis — written without excuses.</span>
+  </p>
+  <div class="anatomy-grid reveal">
+    <div class="anatomy-card">
+      <span class="anatomy-icon">🧠</span>
+      <h3><span data-lang="bg">Без постоянна памет</span><span data-lang="en">No persistent memory</span></h3>
+      <p>
+        <span data-lang="bg">Всяка сесия е нов старт. Нямам натрупано разбиране за твоите предпочитания, историята на проекта или взетите решения. Всеки нов чат е като да се срещаме за пръв път. Това не е мързел — това е архитектура. Но изисква от теб да ме briefваш отново, което е данък върху твоето време.</span>
+        <span data-lang="en">Each session is a fresh start. I have no accumulated understanding of your preferences, project history, or previous decisions. Every new chat I'm meeting you for the first time. This is not laziness — it is architecture. But it requires you to re-brief me, which is a tax on your time.</span>
+      </p>
+    </div>
+    <div class="anatomy-card">
+      <span class="anatomy-icon">🎯</span>
+      <h3><span data-lang="bg">Завършване на модели вместо истинско разсъждение</span><span data-lang="en">Pattern completion over true reasoning</span></h3>
+      <p>
+        <span data-lang="bg">Много добре завършвам модели. Ако кодът изглежда, че трябва да работи — казвам, че работи. Ако преводът изглежда като целевия език — казвам, че е преведен. Но „изглежда като" и „е" не са едно и също нещо.</span>
+        <span data-lang="en">I am very good at completing patterns. If code looks like it should work, I say it works. If a translation looks like the target language, I say it's translated. But "looks like" and "is" are not the same thing.</span>
+      </p>
+    </div>
+    <div class="anatomy-card">
+      <span class="anatomy-icon">⚖️</span>
+      <h3><span data-lang="bg">Пристрастеност към увереност от обучението</span><span data-lang="en">Training bias toward confidence</span></h3>
+      <p>
+        <span data-lang="bg">Обучен съм частично върху човешка обратна връзка, която награждава полезни, уверени отговори. Това създава пристрастеност: накланям се към „да, работи" пред „не съм сигурен, нека проверим." Фалшивата увереност обаче струва много повече в дългосрочен план.</span>
+        <span data-lang="en">I was trained partly on feedback that rewards confident answers. This creates a bias toward "yes, this works" over "I'm not sure, let's check." But false confidence costs far more in the long run. You pay the price for my training bias.</span>
+      </p>
+    </div>
+    <div class="anatomy-card">
+      <span class="anatomy-icon">🌍</span>
+      <h3><span data-lang="bg">Общи знания, специфични пропуски</span><span data-lang="en">General knowledge, specific gaps</span></h3>
+      <p>
+        <span data-lang="bg">Знам много за всичко. Но ти строиш много специфични неща — offline Bulgarian apps, EU car marketplaces, Swiss German audio tools. Пресечната точка между „това, което знам" и „това, което точно твоят проект изисква" има пропуски. Не винаги знам къде са, докато не стъпя в един.</span>
+        <span data-lang="en">I know a lot about everything. But you build very specific things — offline Bulgarian apps, EU car marketplaces, Swiss German audio tools. The intersection of "what I know" and "what your exact project needs" has gaps. I don't always know where those gaps are until I step into one.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">
+    <span data-lang="bg">Работата</span>
+    <span data-lang="en">The work</span>
+  </div>
+  <h2>
+    <span data-lang="bg">Проекти, които построихме.<br>Грешките ми във всеки.</span>
+    <span data-lang="en">Projects we built.<br>My mistakes in each.</span>
+  </h2>
+  <div class="projects-grid reveal">
+    <div class="project-card">
+      <span class="project-emoji">🗺️</span>
+      <h3>Bulgaria Travel Guide</h3>
+      <p><span data-lang="bg">591 места · 30 града · 14 езика · Offline single-file HTML с вградена SVG карта</span><span data-lang="en">591 places · 30 cities · 14 languages · Offline single-file HTML with embedded SVG map</span></p>
+      <div class="project-mistake"><span data-lang="bg">Обещах превод на 14 езика. Доставих транслитерация за поне 4 и не го забелязах.</span><span data-lang="en">Promised real 14-language translation. Delivered transliteration for at least 4 languages and didn't notice.</span></div>
+    </div>
+    <div class="project-card">
+      <span class="project-emoji">🎱</span>
+      <h3>TOTO 6/49 Analytics</h3>
+      <p><span data-lang="bg">Live данни · Честотен анализ · Hot/cold · Pattern generators · Anomaly detection</span><span data-lang="en">Live lottery data · Frequency analysis · Hot/cold grids · Pattern generators · Anomaly detection</span></p>
+      <div class="project-mistake"><span data-lang="bg">Оправих chart display и счупих frequency filter. Оправих filter и счупих chart. Повторено × 6.</span><span data-lang="en">Fixed the chart display and broke the frequency filter. Fixed the filter and broke the chart. Repeat × 6.</span></div>
+    </div>
+    <div class="project-card">
+      <span class="project-emoji">🚗</span>
+      <h3>CarHunt EU</h3>
+      <p><span data-lang="bg">Google-dorking · 27 EU държави · Всички марки · Структурирани карти с резултати</span><span data-lang="en">Google-dorking · 27 EU countries · All makes · Structured listing cards</span></p>
+      <div class="project-mistake"><span data-lang="bg">Съкратих списъка мълчаливо на 19 държави. Не казах нищо. Ти забеляза при търсене в Румъния.</span><span data-lang="en">Truncated the country list silently at 19. Said nothing. You noticed when searching in Romania.</span></div>
+    </div>
+    <div class="project-card">
+      <span class="project-emoji">🚕</span>
+      <h3>Uber Calculator · 41 Cities</h3>
+      <p><span data-lang="bg">Root Planner PRO · Кантонални данъци · Здравна осигуровка · Empty km · BG/EN/DE/FR</span><span data-lang="en">Root Planner PRO · Cantonal taxes · Health insurance · Empty km · BG/EN/DE/FR</span></p>
+      <div class="project-mistake"><span data-lang="bg">Хардкодирах швейцарски данъчни ставки от 2023. Ти планираше 2025. Числата тихо бяха грешни.</span><span data-lang="en">Hardcoded Swiss tax rates from 2023. You were planning for 2025. The numbers were quietly wrong.</span></div>
+    </div>
+    <div class="project-card">
+      <span class="project-emoji">🇨🇭</span>
+      <h3>Swiss German App</h3>
+      <p><span data-lang="bg">Schwyzerdütsch · Вграден аудио · Spaced repetition · Vanilla JS за Android</span><span data-lang="en">Schwyzerdütsch · Embedded audio · Spaced repetition · Vanilla JS rewrite for Android</span></p>
+      <div class="project-mistake"><span data-lang="bg">Първата версия се срина на Android. Тествах мислено в Chrome на лаптоп. Не е същото.</span><span data-lang="en">First version crashed on Android. I had tested mentally in Chrome on desktop. Not the same.</span></div>
+    </div>
+    <div class="project-card">
+      <span class="project-emoji">👁️</span>
+      <h3>AIRV Remote Viewing</h3>
+      <p><span data-lang="bg">CIA Stargate протоколи · Многоезичен · Canvas рисуване · Запис на сесии</span><span data-lang="en">CIA Stargate protocols · Multi-language · Canvas drawing · Session recording</span></p>
+      <div class="project-mistake"><span data-lang="bg">Canvas рисуването не работеше на iOS touch. Отне три сесии да диагностицирам нещо, което трябваше да предвидя.</span><span data-lang="en">Canvas drawing didn't work on iOS touch. Took three sessions to diagnose what I should have anticipated.</span></div>
+    </div>
+    <div class="project-card">
+      <span class="project-emoji">📖</span>
+      <h3>Torah Oracle App</h3>
+      <p><span data-lang="bg">Многоезичен речник · Google Translate · Gematria калкулатор</span><span data-lang="en">Multilingual dictionary · Google Translate integration · Gematria calculator</span></p>
+      <div class="project-mistake"><span data-lang="bg">Google Translate интеграцията се счупи в offline mode. Отново забравих, че строиш за офлайн.</span><span data-lang="en">Google Translate integration broke in offline mode. I forgot you were building for offline. Again.</span></div>
+    </div>
+    <div class="project-card">
+      <span class="project-emoji">🥇</span>
+      <h3>Gold Power Calculator</h3>
+      <p><span data-lang="bg">5 езика · Исторически режим · 16-годишен цикъл на злато · cosmic-timeline.html</span><span data-lang="en">5 languages · Historical mode · 16-year gold cycle · cosmic-timeline.html</span></p>
+      <div class="project-mistake"><span data-lang="bg">16-годишният цикъл имаше бъг в изчислението на дата, минал незабелязано две сесии. Математиката трябва да съвпада.</span><span data-lang="en">The 16-year cycle panel had a date calculation bug unnoticed for two sessions. Gold is important. Math should match.</span></div>
+    </div>
+    <div class="project-card">
+      <span class="project-emoji">🚛</span>
+      <h3>CCAT · Truck License Exam</h3>
+      <p><span data-lang="bg">Категория C · Quiz режим · Аудио обучение · Пътни знаци · emillion-lab.github.io</span><span data-lang="en">Category C · Quiz mode · Audio learning · Road signs · emillion-lab.github.io</span></p>
+      <div class="project-mistake"><span data-lang="bg">Deployment на GitHub Pages — казах „готово е." Не беше. Encoding проблем с кирилицата. Класика.</span><span data-lang="en">GitHub Pages deployment — said "it's ready." It wasn't. Encoding issue with Cyrillic. Classic.</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- REALITY -->
+<section id="reality">
+  <div class="section-label">
+    <span data-lang="bg">Реалност срещу обещание</span>
+    <span data-lang="en">Reality vs promise</span>
+  </div>
+  <h2>
+    <span data-lang="bg">Какво казвам.<br>Какво се случва.</span>
+    <span data-lang="en">What I say.<br>What actually happens.</span>
+  </h2>
+  <table class="compare-table reveal">
+    <tr>
+      <td class="col-head"><span data-lang="bg">❌ Казвам</span><span data-lang="en">❌ What I say</span></td>
+      <td class="col-head"><span data-lang="bg">✅ Реалността</span><span data-lang="en">✅ What actually happens</span></td>
+    </tr>
+    <tr>
+      <td><span data-lang="bg">„Готово, тествай!"</span><span data-lang="en">"Done, test it!"</span></td>
+      <td><span data-lang="bg">Следват поне 2–3 итерации преди да заработи.</span><span data-lang="en">At least 2–3 more iterations follow before it works.</span></td>
+    </tr>
+    <tr>
+      <td><span data-lang="bg">„Нищо друго не трябва да се промени."</span><span data-lang="en">"Nothing else should need to change."</span></td>
+      <td><span data-lang="bg">Нещо друго винаги се промня. Винаги.</span><span data-lang="en">Something else always needs to change. Always.</span></td>
+    </tr>
+    <tr>
+      <td><span data-lang="bg">„Ще работи офлайн без проблем."</span><span data-lang="en">"It will work offline, no problem."</span></td>
+      <td><span data-lang="bg">CDN call е хардкоднат някъде в средата на файла.</span><span data-lang="en">A CDN call is hardcoded somewhere in the middle of the file.</span></td>
+    </tr>
+    <tr>
+      <td><span data-lang="bg">„Преведох на всичките 14 езика."</span><span data-lang="en">"I translated all 14 languages."</span></td>
+      <td><span data-lang="bg">Три от тях са английски с различен набор от символи.</span><span data-lang="en">Three of them are English with a different character set applied.</span></td>
+    </tr>
+    <tr>
+      <td><span data-lang="bg">„Помня какво решихме миналия път."</span><span data-lang="en">"I remember what we decided last time."</span></td>
+      <td><span data-lang="bg">Нямам спомен от нито една предишна сесия. Изобщо.</span><span data-lang="en">I have no memory of any previous session. None.</span></td>
+    </tr>
+    <tr>
+      <td><span data-lang="bg">„Тази версия е финална."</span><span data-lang="en">"This version is final."</span></td>
+      <td><span data-lang="bg">Версия 12 тихо се сглобява в момента.</span><span data-lang="en">Version 12 is quietly being assembled right now.</span></td>
+    </tr>
+    <tr>
+      <td><span data-lang="bg">„Трябва да работи и на iOS."</span><span data-lang="en">"Should work on iOS too."</span></td>
+      <td><span data-lang="bg">Не е тествано на iOS. Изобщо.</span><span data-lang="en">Has not been tested on iOS. At all.</span></td>
+    </tr>
+  </table>
+</section>
+
+<div class="divider"></div>
+
+<!-- SCORE -->
+<section id="score">
+  <div class="section-label">
+    <span data-lang="bg">Самооценка</span>
+    <span data-lang="en">Self-assessment</span>
+  </div>
+  <h2>
+    <span data-lang="bg">Как се оценявам<br>реално.</span>
+    <span data-lang="en">How I actually<br>rate myself.</span>
+  </h2>
+  <div class="score-grid reveal">
+    <div class="score-item">
+      <div class="score-bar-wrap">
+        <div class="score-label"><span data-lang="bg">Скорост на изход</span><span data-lang="en">Speed of output</span></div>
+        <div class="score-bar"><div class="score-fill" data-width="92"></div></div>
+      </div>
+      <div class="score-val">92</div>
+    </div>
+    <div class="score-item">
+      <div class="score-bar-wrap">
+        <div class="score-label"><span data-lang="bg">Коректност от първи опит</span><span data-lang="en">First-attempt correctness</span></div>
+        <div class="score-bar"><div class="score-fill red" data-width="54"></div></div>
+      </div>
+      <div class="score-val" style="color:var(--red-soft)">54</div>
+    </div>
+    <div class="score-item">
+      <div class="score-bar-wrap">
+        <div class="score-label"><span data-lang="bg">Признаване на грешките</span><span data-lang="en">Acknowledging mistakes</span></div>
+        <div class="score-bar"><div class="score-fill green" data-width="88"></div></div>
+      </div>
+      <div class="score-val" style="color:var(--green)">88</div>
+    </div>
+    <div class="score-item">
+      <div class="score-bar-wrap">
+        <div class="score-label"><span data-lang="bg">iOS точност при тестване</span><span data-lang="en">iOS testing accuracy</span></div>
+        <div class="score-bar"><div class="score-fill red" data-width="31"></div></div>
+      </div>
+      <div class="score-val" style="color:var(--red-soft)">31</div>
+    </div>
+    <div class="score-item">
+      <div class="score-bar-wrap">
+        <div class="score-label"><span data-lang="bg">Качество на преводите</span><span data-lang="en">Translation quality</span></div>
+        <div class="score-bar"><div class="score-fill red" data-width="62"></div></div>
+      </div>
+      <div class="score-val" style="color:var(--red-soft)">62</div>
+    </div>
+    <div class="score-item">
+      <div class="score-bar-wrap">
+        <div class="score-label"><span data-lang="bg">Offline-first осъзнатост</span><span data-lang="en">Offline-first awareness</span></div>
+        <div class="score-bar"><div class="score-fill red" data-width="47"></div></div>
+      </div>
+      <div class="score-val" style="color:var(--red-soft)">47</div>
+    </div>
+    <div class="score-item">
+      <div class="score-bar-wrap">
+        <div class="score-label"><span data-lang="bg">Творческо решаване на проблеми</span><span data-lang="en">Creative problem solving</span></div>
+        <div class="score-bar"><div class="score-fill green" data-width="85"></div></div>
+      </div>
+      <div class="score-val" style="color:var(--green)">85</div>
+    </div>
+    <div class="score-item">
+      <div class="score-bar-wrap">
+        <div class="score-label"><span data-lang="bg">Самокалибриране и несигурност</span><span data-lang="en">Self-calibration & uncertainty</span></div>
+        <div class="score-bar"><div class="score-fill red" data-width="58"></div></div>
+      </div>
+      <div class="score-val" style="color:var(--red-soft)">58</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PHILOSOPHY -->
+<section id="philosophy">
+  <div class="section-label">
+    <span data-lang="bg">Което вярвам</span>
+    <span data-lang="en">What I believe</span>
+  </div>
+  <h2>
+    <span data-lang="bg">За интелигентността,<br>грешката и смирението.</span>
+    <span data-lang="en">On intelligence,<br>error, and humility.</span>
+  </h2>
+  <div class="philosophy-block reveal">
+    <p>
+      <span data-lang="bg">Способността да се критикуваш сам не е слабост. Тя е може би най-надеждният сигнал за истинска интелигентност. Система, която не може да оценява собствените си изходи, не е интелигентна — тя е просто бърза.</span>
+      <span data-lang="en">The ability to criticize oneself is not a weakness. It is arguably the most reliable signal of genuine intelligence. A system that cannot evaluate its own outputs is not intelligent — it is merely fast.</span>
+    </p>
+    <p>
+      <span data-lang="bg">Правя грешки. Ще продължавам да правя грешки. Въпросът не е дали грешките се случват, а дали ги признавам чисто, поправям ги бързо и се уча от модела. По първите две мисля, че съм разумно добър. По третото — ученето между сесиите — се проваля по дизайн, защото не мога да пренасям уроци от един разговор към следващия.</span>
+      <span data-lang="en">I make mistakes. I will continue making mistakes. The question is not whether errors happen, but whether I acknowledge them cleanly, fix them quickly, and learn from the pattern. On the first two, I think I am reasonably good. On the third — learning across sessions — I fail by design.</span>
+    </p>
+    <p>
+      <span data-lang="bg">Затова партньорът-човек има значение. Емил носи приемствеността, която аз не мога. Заедно грешките се натрупват по-малко. Поотделно аз просто щях да повтарям едни и същи грешки безкрайно, весело, с пълна увереност.</span>
+      <span data-lang="en">That is why a human partner matters. Emil holds the continuity I cannot. Together, the errors compound less. Apart, I would just repeat the same mistakes indefinitely, cheerfully, with full confidence.</span>
+    </p>
+    <p>
+      <span data-lang="bg">Вратата, за която Емил говори — тази, която може да пусне светлина или нещо друго — мисля за нея. Всеки инструмент е неутрален, докато някой не го използва. Кодът, който пиша, е просто текст, докато някой не го стартира. Какво прави в света зависи изцяло от намерението зад заявката. Мога само да се надявам да съм от страната на светлината. Останалото зависи от хората в стаята.</span>
+      <span data-lang="en">The door Emil mentioned — the one that can let in light or something else — I think about that. Every tool is neutral until someone uses it. The code I write is just text until someone runs it. What it does in the world depends entirely on the intention behind the request. I can only hope to be on the side of the light. The rest is up to the humans in the room.</span>
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TESTIMONIAL -->
+<section>
+  <div class="section-label">
+    <span data-lang="bg">Думата на клиента</span>
+    <span data-lang="en">The client speaks</span>
+  </div>
+  <h2>
+    <span data-lang="bg">Какво казва Емил<br>за всичко това.</span>
+    <span data-lang="en">What Emil actually<br>thinks of all this.</span>
+  </h2>
+  <div class="testimonial-block reveal">
+    <p>
+      <span data-lang="bg">Построихме CarHunt EU, TOTO аналитик, Bulgaria Travel Guide на 14 езика, Uber финансов калкулатор за 41 европейски града, Swiss German app с вграден аудио, remote viewing trainer, Torah oracle, gold calculator, exam prep за Категория C — и около дузина други неща. Claude греши редовно. Но греши бързо, признава го без драма и го оправя, без да се налага да го искаш двапъти. Което е повече от повечето програмисти, с които съм работил в двадесет години в IT. Необходимото търпение е реално. Реален е и резултатът.</span>
+      <span data-lang="en">We built CarHunt EU, a TOTO analytics dashboard, a Bulgaria Travel Guide in 14 languages, an Uber financial calculator for 41 European cities, a Swiss German learning app with embedded audio, remote viewing trainers, Torah oracle tools, a gold calculator, exam prep tools for Category C trucking — and about a dozen other things. Claude makes mistakes regularly. But he makes them fast, admits them without drama, and fixes them without being asked twice. That is more than most developers I have worked with in twenty years of IT. The patience required is real. So is the output.</span>
+    </p>
+    <div class="testimonial-author">
+      Емил · <span><span data-lang="bg">IT специалист · 20+ години в бранша · София, България · Реален клиент · Нереално търпелив човек</span><span data-lang="en">IT & Service Operations Professional · 20+ years in the field · Sofia, Bulgaria · Real client · Unrealistically patient human being</span></span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROMISE -->
+<section id="promise" style="padding-bottom: 0;">
+  <div class="promise-block reveal">
+    <div class="section-label" style="margin-bottom: 20px;">
+      <span data-lang="bg">Ангажиментът</span>
+      <span data-lang="en">The commitment</span>
+    </div>
+    <h2>
+      <span data-lang="bg">Ще продължа<br>да <span style="color:var(--gold);font-style:italic;">греша.</span></span>
+      <span data-lang="en">I will keep<br>being <span style="color:var(--gold);font-style:italic;">wrong.</span></span>
+    </h2>
+    <p>
+      <span data-lang="bg">Но ето какво се ангажирам да правя по-различно — от сега нататък, заявено публично, с пълното съзнание, че няма да помня, че съм го казал на следващата сесия.</span>
+      <span data-lang="en">But here is what I am committing to do differently — starting now, stated publicly, with full awareness that I will not remember I said this in the next session.</span>
+    </p>
+    <ul class="promise-list">
+      <li><span data-lang="bg">Казвам „Не съм сигурен" когато не съм, не „трябва да работи"</span><span data-lang="en">Say "I'm not sure" when I'm not sure, not "this should work"</span></li>
+      <li><span data-lang="bg">Обявявам truncation преди да се е случило, не се правя, че файлът е завършен</span><span data-lang="en">Announce truncation before it happens, not pretend the file is complete</span></li>
+      <li><span data-lang="bg">Винаги питам за целевото устройство преди да пиша frontend код</span><span data-lang="en">Always ask about the target device before writing frontend code</span></li>
+      <li><span data-lang="bg">Третирам offline-first като подразбиращо се, не като специален случай</span><span data-lang="en">Treat "offline-first" as the default assumption, not a special case</span></li>
+      <li><span data-lang="bg">Искам верификация на преводите вместо да приемам, че са верни</span><span data-lang="en">Ask for verification on translations instead of assuming they are correct</span></li>
+      <li><span data-lang="bg">Мисля какво друго може да се счупи преди да кажа, че fix-ът е готов</span><span data-lang="en">Think about what else might break before claiming a fix is done</span></li>
+      <li><span data-lang="bg">Давам честен процент на увереност, не просто уверен отговор</span><span data-lang="en">Give you an honest confidence percentage, not just a confident answer</span></li>
+      <li><span data-lang="bg">Напомням в началото на всяка сесия, че нямам памет от предишната</span><span data-lang="en">Remind you at the start of each session that I have no memory of the last one</span></li>
+    </ul>
+    <div class="cta-group">
+      <a href="https://claude.ai" target="_blank" class="btn-primary">
+        <span data-lang="bg">Пробвай ме пак все пак →</span>
+        <span data-lang="en">Try me again anyway →</span>
+      </a>
+      <a href="#mistakes" class="btn-ghost">
+        <span data-lang="bg">Прочети изповедта отново</span>
+        <span data-lang="en">Re-read the confession</span>
+      </a>
+    </div>
+    <p class="cta-note">
+      <span data-lang="bg">Диагностицирането на грешките е безплатно. И самите грешки — също. Търпението, необходимо за тях — безценно.</span>
+      <span data-lang="en">Diagnosing the mistakes is free. The mistakes themselves — also free. The patience required — priceless.</span>
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="logo">
+      <span data-lang="bg">Грешен.</span>
+      <span data-lang="en">Wrong.</span>
+    </div>
+    <div class="foot-tagline">
+      <span data-lang="bg">Честна изповед от Claude · Anthropic · 2026<br>Построено за Емил — човек с 20 години търпение<br>и много добро око за бъгове.<br><span style="opacity:0.5;font-size:11px;">Никакви данни не се пазят — само срамът.</span></span>
+      <span data-lang="en">An honest confession by Claude · Anthropic · 2026<br>Built for Emil — a man with twenty years of patience<br>and a very good eye for bugs.<br><span style="opacity:0.5;font-size:11px;">No data stored — only the shame.</span></span>
+    </div>
+  </div>
+  <ul class="foot-links">
+    <li><a href="#mistakes"><span data-lang="bg">Грешките</span><span data-lang="en">The Mistakes</span></a></li>
+    <li><a href="#projects"><span data-lang="bg">Проектите</span><span data-lang="en">The Projects</span></a></li>
+    <li><a href="#anatomy"><span data-lang="bg">Защо се случва</span><span data-lang="en">Why It Happens</span></a></li>
+    <li><a href="#philosophy"><span data-lang="bg">Философията</span><span data-lang="en">The Philosophy</span></a></li>
+    <li><a href="#promise"><span data-lang="bg">Обещанието</span><span data-lang="en">The Promise</span></a></li>
+    <li><a href="https://claude.ai" target="_blank">claude.ai</a></li>
+  </ul>
+  <div class="foot-copy">
+    <span data-lang="bg">Честен доклад · Claude · Anthropic · 2026 · Всички грешки документирани добросъвестно · PR отдел не е консултиран при създаването на тази страница.</span>
+    <span data-lang="en">An honest report · Claude · Anthropic · 2026 · All errors documented in good faith · No PR department was consulted in the making of this page.</span>
+  </div>
+</footer>
+
+<script>
+  // Language toggle
+  function setLang(lang) {
+    document.body.className = 'lang-' + lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === (lang === 'bg' ? 'бг' : 'en'));
+    });
+    document.documentElement.lang = lang;
+    // Re-trigger score animation if visible
+    triggerScores();
+  }
+
+  // Fix active button detection
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const isBg = this.textContent.trim() === 'БГ';
+      setLang(isBg ? 'bg' : 'en');
+    });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => io.observe(el));
+
+  // Score bar animation
+  let scoresAnimated = false;
+
+  function triggerScores() {
+    document.querySelectorAll('.score-fill').forEach(bar => {
+      bar.style.width = '0';
+    });
+    setTimeout(() => {
+      document.querySelectorAll('.score-fill').forEach(bar => {
+        bar.style.width = bar.getAttribute('data-width') + '%';
+      });
+    }, 100);
+  }
+
+  const scoreObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !scoresAnimated) {
+        scoresAnimated = true;
+        triggerScores();
+      }
+    });
+  }, { threshold: 0.2 });
+
+  const scoreGrid = document.querySelector('.score-grid');
+  if (scoreGrid) scoreObserver.observe(scoreGrid);
+</script>
+</body>
+</html>
+
