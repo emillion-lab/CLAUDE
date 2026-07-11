@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Control Room — emillion-lab</title>
+<style>
+  :root { --bg:#0d1117; --card:#161b22; --line:#30363d; --txt:#e6edf3; --dim:#8b949e; --ok:#3fb950; --accent:#58a6ff; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--txt); font-family:-apple-system,'Segoe UI',Roboto,sans-serif; padding:20px; max-width:680px; margin:0 auto; }
+  h1 { font-size:1.3rem; margin-bottom:4px; }
+  .sub { color:var(--dim); font-size:.85rem; margin-bottom:20px; }
+  .chain { display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px; margin-bottom:16px; font-size:.9rem; }
+  .node { background:#21262d; border:1px solid var(--line); border-radius:8px; padding:6px 12px; }
+  .arrow { color:var(--accent); }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px; margin-bottom:12px; }
+  .card h2 { font-size:.95rem; margin-bottom:10px; color:var(--accent); }
+  .row { display:flex; justify-content:space-between; gap:10px; padding:6px 0; border-bottom:1px solid var(--line); font-size:.85rem; }
+  .row:last-child { border-bottom:none; }
+  .row .msg { flex:1; }
+  .row .meta { color:var(--dim); white-space:nowrap; }
+  .dot { display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--ok); margin-right:6px; }
+  .foot { color:var(--dim); font-size:.75rem; text-align:center; margin-top:20px; }
+  code { background:#21262d; padding:1px 6px; border-radius:5px; font-size:.8rem; }
+</style>
+</head>
+<body>
+  <h1>🎛️ Control Room</h1>
+  <div class="sub">Тази страница е създадена изцяло от Claude — през собствения MCP worker на emillion-lab. Нито един ред не е минал през copy/paste.</div>
+
+  <div class="chain">
+    <span class="node">💬 Claude чат</span><span class="arrow">→</span>
+    <span class="node">☁️ gh-admin Worker</span><span class="arrow">→</span>
+    <span class="node">🐙 GitHub API</span><span class="arrow">→</span>
+    <span class="node">📄 GitHub Pages</span>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>Инфраструктура (Cloudflare, на живо при генерирането)</h2>
+    <div class="row"><span class="msg">gh-admin <code>MCP сървър</code></span><span class="meta">създаден 11.07.2026</span></div>
+    <div class="row"><span class="msg">mvr-proxy <code>КАТ данни</code></span><span class="meta">активен</span></div>
+    <div class="row"><span class="msg">abrp / bob / starter</span><span class="meta">активни</span></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>Последна активност — BILKA 🌿</h2>
+    <div class="row"><span class="msg">Автоматично вграждане на снимки на отровните растения</span><span class="meta">eaec43d</span></div>
+    <div class="row"><span class="msg">Реални снимки за блян и воден бучиниш</span><span class="meta">3a09cb5</span></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>Последна активност — gramofonche 📀</h2>
+    <div class="row"><span class="msg">Фикс: следваща при кирилски файлове; плъзгач на цял ред</span><span class="meta">e31f9d1</span></div>
+  </div>
+
+  <div class="card">
+    <h2>📊 Акаунтът в числа</h2>
+    <div class="row"><span class="msg">Репозитории</span><span class="meta">36</span></div>
+    <div class="row"><span class="msg">Cloudflare Workers</span><span class="meta">5</span></div>
+    <div class="row"><span class="msg">Токени, минали през чата при тази заявка</span><span class="meta">0 ✅</span></div>
+  </div>
+
+  <div class="foot">Комитнато от Claude през gh-admin MCP · 11.07.2026 · единичен офлайн HTML файл, без зависимости — както си му е редът тук</div>
+</body>
+</html>
